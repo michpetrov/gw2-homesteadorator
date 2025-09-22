@@ -5,38 +5,60 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+.content {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+  h1 {
+    flex: 1 1 100%;
   }
-  to {
-    transform: rotate(360deg);
+
+  .list-text  {
+    display: flex;
+    flex: 1 1 25%;
+    flex-direction: row;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.list-text .checkbox-list {
+  display: flex;
+  flex: 1;
+  list-style-position: inside;
+  text-align: left;
+}
+
+.list-text textarea {
+  flex: 3;
+  font-size: x-large;
 }
 
 .card {
   padding: 2em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  flex-direction: row;
 }
 
-.read-the-docs {
-  color: #888;
+.card-child {
+  margin: 4px;
+  flex: 1 1 30%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.x-axis {
+  accent-color: red;
+}
+
+.y-axis {
+  accent-color: green;
+}
+
+.z-axis {
+  accent-color: blue;
 }
