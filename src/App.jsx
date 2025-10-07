@@ -89,7 +89,7 @@ const RangeGroup = ({name, ticks, axes, labelFn, values, returnValues, ...rest})
 
   let rangeControls = [];
   for (let i = 0; i < values.length; i++) {
-    rangeControls.push(<RangeInput axis={axes[i]} value={values[i]} index={i} onChange={setValueAt} list={datalistId} labelFn={labelFn} name={name} {...rest}/>)
+    rangeControls.push(<RangeInput key={i} axis={axes[i]} value={values[i]} index={i} onChange={setValueAt} list={datalistId} labelFn={labelFn} name={name} {...rest}/>)
   }
 
   return (
@@ -106,8 +106,8 @@ function App() {
   const [selected, setSelected] = useState([])
   const [text, setText] = useState("")
 
-  let angleRatio = Math.PI/512
-  let distRatio = 100/97
+  const angleRatio = Math.PI/512
+  const distRatio = 100/97
 
   const angleConverter = HMath.createConverter(angleRatio);
   const distConverter = HMath.createConverter(distRatio);
@@ -124,9 +124,7 @@ function App() {
   if (selectedDecorations.length > 1) {
     // calculate centroid
     selectedDecorations.forEach(el => {
-      for (let i = 0; i < position.length; i++) {
-        centroid[i] += el.pos[i]
-      }
+      centroid = HMath.addTuple(centroid, el.pos)
     })
     centroid = centroid.map(p => (p/selectedDecorations.length))
   }
@@ -137,52 +135,40 @@ function App() {
     setText(value);
   }
 
-  // TODO: turn this into math functions and put into a library
-  const setRotation = (values) => {
-    values = angleConverter.toXMLValue(values)
-    if (selectedDecorations.length === 1) {
-      selectedDecorations[0].rot = values
-    // TODO I should be getting back the delta instead
-    } else if (selectedDecorations.length > 1) {
-      let delta = [0,0,0]
-      values.forEach((e,i) => {
-        delta[i] = e - selectedDecorations[0].rot[i]
-      })
-      selectedDecorations.forEach(el => {
-        for (let i = 0; i < el.rot.length; i++) {
-          el.rot[i] += delta[i]
-          el.rot[i] = correctAngle(el.rot[i], 2*Math.PI)
-        }
-      })
+  // TODO: don't change value if we hit max/min and inform user
+  const processTriple = (valueConverter, attr, getDeltaAgainst, correctionFn) => {
+    return (values) => {
+      values = valueConverter.toXMLValue(values)
+      if (selectedDecorations.length === 1) {
+        selectedDecorations[0][attr] = values
+      // TODO I should be getting back the delta instead
+      } else if (selectedDecorations.length > 1) {
+        let delta = HMath.delta(values, getDeltaAgainst())
+        selectedDecorations.forEach(el => {
+          el[attr] = HMath.addTuple(el[attr], delta)
+          if (correctionFn) correctionFn(el[attr]);
+        })
+      }
+      setText(decorations.map(Prop.toString).join(LB))
     }
-    setText(decorations.map(Prop.toString).join(LB))
   }
 
-  const setPosition = (values) => {
-    values = distConverter.toXMLValue(values)
-    if (selectedDecorations.length === 1) {
-      selectedDecorations[0].pos = values
-    // TODO I should be getting back the delta instead
-    } else if (selectedDecorations.length > 1) {
-      let delta = [0,0,0]
-      values.forEach((e,i) => {
-        delta[i] = e - centroid[i]
-      })
-      selectedDecorations.forEach(el => {
-        for (let i = 0; i < el.pos.length; i++) {
-          el.pos[i] += delta[i]
-        }
-      })
+  const rotPivotFn = () => selectedDecorations[0].rot;
+  const setRotation = processTriple(angleConverter, 'rot', rotPivotFn, (rot) => {
+    for (let i = 0; i < rot.length; i++) {
+      rot[i] = correctAngle(rot[i], 2*Math.PI)
     }
-    setText(decorations.map(Prop.toString).join(LB))
-  }
+  });
+
+  const posPivotFn = () => centroid;
+  const setPosition = processTriple(distConverter, 'pos', posPivotFn, null);
 
   if (selectedDecorations.length === 1) {
     rotation = angleConverter.fromXMLValue(selectedDecorations[0].rot)
     position = distConverter.fromXMLValue(selectedDecorations[0].pos)
   } else if (selectedDecorations.length > 1) {
-    rotation = angleConverter.fromXMLValue(selectedDecorations[0].rot)
-    position = distConverter.fromXMLValue(centroid)
+    rotation = angleConverter.fromXMLValue(rotPivotFn())
+    position = distConverter.fromXMLValue(posPivotFn())
   }
 
   const rotLabelFn = (val) => `${(180*val/512).toFixed(2)}°`
