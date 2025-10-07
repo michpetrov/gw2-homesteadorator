@@ -10,6 +10,13 @@ export const createConverter = (ratio) => {
   }
 }
 
+export const createSimpleConverter = (ratio) => {
+  return {
+    fromXMLValue: (value) => value/ratio,
+    toXMLValue: (value) => value*ratio
+  }
+}
+
 // what will this do, just check?
 const positionChecker = (minmax) => { // [ [min1, max1], [m2,m2], ...]
   return {

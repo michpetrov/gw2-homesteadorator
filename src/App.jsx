@@ -73,6 +73,20 @@ const RangeInput = ({name, axis, index, onChange, labelFn, value, ...rest}) => {
   )
 }
 
+const DataList = ({datalistId, ticks}) => {
+
+  let tickOptions = [];
+  for (let i = 0; i < ticks.length; i++) {
+    tickOptions.push(<option key={i} value={ticks[i]} />)
+  }
+
+  return (
+    <datalist id={datalistId}>
+      {tickOptions}
+    </datalist>
+  )
+}
+
 const RangeGroup = ({name, ticks, axes, labelFn, values, returnValues, ...rest}) => {
 
   const setValueAt = (value, index) => {
@@ -82,10 +96,6 @@ const RangeGroup = ({name, ticks, axes, labelFn, values, returnValues, ...rest})
   }
 
   let datalistId = `${name}-ticks`
-  let tickOptions = [];
-  for (let i = 0; i < ticks.length; i++) {
-    tickOptions.push(<option key={i} value={ticks[i]} />)
-  }
 
   let rangeControls = [];
   for (let i = 0; i < values.length; i++) {
@@ -95,9 +105,7 @@ const RangeGroup = ({name, ticks, axes, labelFn, values, returnValues, ...rest})
   return (
     <>
       {rangeControls}
-      <datalist id={datalistId}>
-        {tickOptions}
-      </datalist>
+      <DataList datalistId={datalistId} ticks={ticks} />
     </>
   )
 }
@@ -108,10 +116,12 @@ function App() {
 
   const angleRatio = Math.PI/512
   const distRatio = 100/97
+  const scaleRatio = 1/100
 
-  const angleConverter = HMath.createConverter(angleRatio);
-  const distConverter = HMath.createConverter(distRatio);
+  const angleConverter = HMath.createConverter(angleRatio)
+  const distConverter = HMath.createConverter(distRatio)
   const correctAngle = (value, mod) => (value + mod) % mod
+  const scaleConverter = HMath.createSimpleConverter(scaleRatio)
 
   // TODO: check if string is parseable
   const decorations = text != "" ? text.split(LB).map(Prop.fromString) : [];
@@ -120,6 +130,7 @@ function App() {
   let rotation = [0,0,0]
   let position = [0,0,0]
   let centroid = [0,0,0]
+  let scale = 0
 
   if (selectedDecorations.length > 1) {
     // calculate centroid
@@ -166,13 +177,16 @@ function App() {
   if (selectedDecorations.length === 1) {
     rotation = angleConverter.fromXMLValue(selectedDecorations[0].rot)
     position = distConverter.fromXMLValue(selectedDecorations[0].pos)
+    scale = scaleConverter.fromXMLValue(selectedDecorations[0].scl)
   } else if (selectedDecorations.length > 1) {
     rotation = angleConverter.fromXMLValue(rotPivotFn())
     position = distConverter.fromXMLValue(posPivotFn())
+    scale = scaleConverter.fromXMLValue(selectedDecorations[0].scl)
   }
 
   const rotLabelFn = (val) => `${(180*val/512).toFixed(2)}°`
   const posLabelFn = (val) => `${(val*distRatio).toFixed(2)}`
+  const sclLabelFn = (val) => `${(val*scaleRatio).toFixed(2)}`
 
   const rotOpts = {
     name: 'rot',
@@ -190,6 +204,29 @@ function App() {
     max: 8000
   }
 
+  // TODO: maybe 0.5-1 should behave same as 1-2; [-1,1] with more sophisticated converter?
+  const sclOpts = {
+    name: 'scl',
+    ticks: [50, 75, 100, 125, 150, 175, 200],
+    min: 50,
+    max: 200
+  }
+
+  const setScale = (value) => {
+      let attr = "scl"
+      value = scaleConverter.toXMLValue(value)
+      if (selectedDecorations.length === 1) {
+        selectedDecorations[0][attr] = value
+      // TODO I should be getting back the delta instead
+      } else if (selectedDecorations.length > 1) {
+        let delta = value / selectedDecorations[0][attr]
+        selectedDecorations.forEach(el => {
+          el[attr] *= delta
+        })
+      }
+      setText(decorations.map(Prop.toString).join(LB))
+    }
+
   return (
     <div className="content">
       <h1>GW2 Homesteadorator</h1>
@@ -203,6 +240,8 @@ function App() {
         <div className="card">
           <RangeGroup {...posOpts} values={position} returnValues={setPosition} labelFn={posLabelFn} />
           <RangeGroup {...rotOpts} values={rotation} returnValues={setRotation} labelFn={rotLabelFn} />
+          <RangeInput axis="Scale" value={scale} index={0} onChange={setScale} list="scale-ticks" labelFn={sclLabelFn} {...sclOpts} />
+          <DataList datalistId="scale-ticks" ticks={sclOpts.ticks} />
         </div>
       }
     </div>
