@@ -1,16 +1,18 @@
+// TODO: should this be agnostic or no? probably no
+
 export const multiplyTuple = (tuple, ratio)  => tuple.map(e => e*ratio)
 export const addTuple =      (tuple, delta)  => tuple.map((e,i) => e + delta[i])
 export const delta =         (tuple, origin) => tuple.map((e,i) => e - origin[i])
 
 // multiplicative converter, will we need other ones?
-export const createConverter = (ratio) => {
+const createConverter = (ratio) => {
   return {
     fromXMLValue: (tuple) => multiplyTuple(tuple, 1/ratio),
     toXMLValue: (tuple) => multiplyTuple(tuple, ratio) 
   }
 }
 
-export const createSimpleConverter = (ratio) => {
+const createSimpleConverter = (ratio) => {
   return {
     fromXMLValue: (value) => value/ratio,
     toXMLValue: (value) => value*ratio
@@ -30,14 +32,23 @@ const positionChecker = (minmax) => { // [ [min1, max1], [m2,m2], ...]
   }
 }
 
+export const angleRatio = Math.PI/512
+export const distRatio = 100/97
+export const scaleRatio = 1/100
+
+export const angleConverter = createConverter(angleRatio)
+export const distConverter = createConverter(distRatio)
+export const scaleConverter = createSimpleConverter(scaleRatio)
+export const correctAngle = (value) => (value + 2*Math.PI) % (2*Math.PI)
+
 const sinCos = (angle) => {
   return [Math.sin(angle), Math.cos(angle)]
 }
 
-const rotate = ([x,y,z], rot) => {
-  let [sinA, cosA] = sinCos(rot[0])
-  let [sinB, cosB] = sinCos(rot[1])
-  let [sinC, cosC] = sinCos(rot[2])
+export const rotate = ([x,y,z], [a,b,c]) => {
+  let [sinA, cosA] = sinCos(a)
+  let [sinB, cosB] = sinCos(b)
+  let [sinC, cosC] = sinCos(c)
 
   let xx = (x*cosC - y*sinC)*cosB + z*sinB
   let yy = (y*cosC + x*sinC)*cosA - (z*cosB - (x*cosC - y*sinC)*sinB)*sinA
