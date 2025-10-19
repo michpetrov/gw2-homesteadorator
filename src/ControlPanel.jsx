@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import ToolControlContext from './ToolControlContext.jsx'
-import FullControl from './FullControl.jsx'
-import Mover from './Mover.jsx'
+import FullControl from './tools/FullControl.jsx'
+import Mover from './tools/Mover.jsx'
 
 const tools = {
-  'full-control': <FullControl/>,
-  'mover': <Mover/>
+  'mover': <Mover/>,
+  'full-control': <FullControl/>
 }
 
 const name = (n) => {
@@ -18,17 +18,22 @@ export default (state) => {
 
   let options = []
   Object.keys(tools).forEach((o,i) => {
-    options.push(<option key={i} value={o}>{name(o)}</option>)
+    options.push(<li key={i}><button onClick={e => setTool(o)} className={o === tool ? 'active' : ''}>{name(o)}</button></li>)
   })
 
   return (
-    <div id="control-panel">
-      <select id="tool-select" value={tool} onChange={e => setTool(e.target.value)}>
-        {options}
-      </select>
-      <ToolControlContext value={{...state}}>
-        {state.decs.length != 0 && tools[tool]}
-      </ToolControlContext>
-    </div>
+    <>
+      <div>
+        <span className="label">Select tool</span>
+        <menu id="tool-select">
+          {options}
+        </menu>
+      </div>
+      <div className={`tool-control ${tool}`}>
+        <ToolControlContext value={{...state}}>
+          {state.decs.length != 0 && tools[tool]}
+        </ToolControlContext>
+      </div>
+    </>
   )
 }

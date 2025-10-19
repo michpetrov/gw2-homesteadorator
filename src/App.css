@@ -5,60 +5,46 @@
   text-align: center;
 }
 
-.content {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
+.controls {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
 
-  h1 {
-    flex: 1 1 100%;
-  }
-
-  .list-text  {
-    display: flex;
-    flex: 1 1 25%;
-    flex-direction: row;
+  .tool-control {
+    grid-column-start: 1;
+    grid-column-end: 3;
   }
 }
 
-.list-text .checkbox-list {
-  display: flex;
-  flex: 1;
-  list-style-position: inside;
-  text-align: left;
-}
-
-.list-text textarea {
-  flex: 3;
+.controls textarea {
   font-size: x-large;
 }
 
-.card {
-  padding: 2em;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: baseline;
-  flex-direction: row;
-}
+.controls menu {
+  list-style: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 
-.card-child {
-  margin: 4px;
-  flex: 1 1 30%;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  flex-direction: column;
-}
+  button {
+    width: 100%;
+    background-color: #121212;
+    color: #eaeaea;
+    border: unset;
+    border-radius: unset;
 
-.x-axis {
-  accent-color: red;
-}
+    &:focus {
+      outline: none;
+    }
 
-.y-axis {
-  accent-color: green;
-}
+    &.active, &.active:hover {
+      color: #363636;
+      background-color: #eaeaea;
+    }
 
-.z-axis {
-  accent-color: blue;
+    &:hover {
+      background-color: #363636;
+    }
+  }
 }

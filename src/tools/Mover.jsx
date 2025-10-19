@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react'
-import ToolControlContext from './ToolControlContext.jsx'
-import * as Prop from './Prop'
-import * as HMath from './HomesteadMath'
+import ToolControlContext from '../ToolControlContext.jsx'
+import * as Prop from '../Prop'
+import * as HMath from '../HomesteadMath'
 
 export default () => {
   const {decs, setDecs} = useContext(ToolControlContext);
@@ -17,6 +17,7 @@ export default () => {
     for (let i = 0; i < decs.length; i++) {
       if (decs[i].id === pivot.id) {
         original = decs[i]
+        break
       }
     }
 

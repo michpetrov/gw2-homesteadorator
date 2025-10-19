@@ -1,8 +1,8 @@
 import { useState, useContext } from 'react'
-import ToolControlContext from './ToolControlContext.jsx'
-//import * as Prop from './Prop'
-import * as HMath from './HomesteadMath'
-import { CheckBoxList, RangeGroup, RangeInput, DataList } from './Controls.jsx'
+import ToolControlContext from '../ToolControlContext.jsx'
+import * as HMath from '../HomesteadMath'
+import { CheckBoxList, RangeGroup, RangeInput, DataList } from '../Controls.jsx'
+import './full-control.css'
 
 
 export default () => {
