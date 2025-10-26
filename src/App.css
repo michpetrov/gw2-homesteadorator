@@ -14,37 +14,51 @@
   .tool-control {
     grid-column-start: 1;
     grid-column-end: 3;
+    padding: 10px;
+    /* background-color: #121212;  change main background first (index.css)*/
   }
-}
 
-.controls textarea {
-  font-size: x-large;
-}
+  textarea {
+    font-size: x-large;
+  }
 
-.controls menu {
-  list-style: none;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-
-  button {
+  menu {
+    list-style: none;
     width: 100%;
-    background-color: #121212;
-    color: #eaeaea;
-    border: unset;
-    border-radius: unset;
+    margin: 0;
+    padding: 0;
 
-    &:focus {
-      outline: none;
-    }
+    button {
+      width: 100%;
+      background-color: #121212;
+      color: #eaeaea;
+      border: unset;
+      border-radius: unset;
 
-    &.active, &.active:hover {
-      color: #363636;
-      background-color: #eaeaea;
-    }
+      &:focus {
+        outline: none;
+      }
 
-    &:hover {
-      background-color: #363636;
+      &.active, &.active:hover {
+        color: #363636;
+        background-color: #eaeaea;
+      }
+
+      &:hover {
+        background-color: #363636;
+      }
     }
   }
+}
+
+.x-axis {
+  accent-color: red;
+}
+
+.y-axis {
+  accent-color: green;
+}
+
+.z-axis {
+  accent-color: blue;
 }

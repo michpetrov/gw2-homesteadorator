@@ -2,7 +2,7 @@ import { useState, useContext } from 'react'
 import ToolControlContext from '../ToolControlContext.jsx'
 import * as HMath from '../HomesteadMath'
 import { CheckBoxList, RangeGroup, RangeInput, DataList } from '../Controls.jsx'
-import './full-control.css'
+import './css/full-control.css'
 
 
 export default () => {
@@ -109,12 +109,10 @@ export default () => {
   return (
     <>
       <CheckBoxList decs={decs} selected={selected} setSelected={setSelected} />
-      <div className="card">
-        <RangeGroup {...posOpts} values={position} returnValues={setPosition} labelFn={posLabelFn} />
-        <RangeGroup {...rotOpts} values={rotation} returnValues={setRotation} labelFn={rotLabelFn} />
-        <RangeInput axis="Scale" value={scale} index={0} onChange={setScale} list="scale-ticks" labelFn={sclLabelFn} {...sclOpts} />
-        <DataList datalistId="scale-ticks" ticks={sclOpts.ticks} />
-      </div>
+      <RangeGroup {...posOpts} values={position} returnValues={setPosition} labelFn={posLabelFn} />
+      <RangeGroup {...rotOpts} values={rotation} returnValues={setRotation} labelFn={rotLabelFn} />
+      <RangeInput axis="Scale" value={scale} index={0} onChange={setScale} list="scale-ticks" labelFn={sclLabelFn} {...sclOpts} />
+      <DataList datalistId="scale-ticks" ticks={sclOpts.ticks} />
     </>
   )
 

@@ -1,9 +1,32 @@
-// TODO: should this be agnostic or no? probably no
+const homesteads = {
+  'Janthir': {
+    x: [-8000, 8000], // west-east
+    y: [-8000, 8000], // bottom-top
+    z: [-8000, 8000]  // south-north
+  },
+  'Castora': {
+    x: [-8000, 8000], // west-east
+    y: [-8000, 8000], // bottom-top
+    z: [-8000, 8000]  // south-north
+  }
+}
+
+export const getHomestead = (name) => {
+  return homesteads[name]
+}
+
+export const angleRange = [0, 1023]
+export const scaleRange = [50,200]
+export const posStep = 1/16
+export const sclStep = 1/16
 
 export const multiplyTuple = (tuple, ratio)  => tuple.map(e => e*ratio)
 export const addTuple =      (tuple, delta)  => tuple.map((e,i) => e + delta[i])
 export const delta =         (tuple, origin) => tuple.map((e,i) => e - origin[i])
 
+
+// converter should convert between prop attribute into internal representation
+// i.e. for angle the conversion should be between 3.141593 <-> 512 
 // multiplicative converter, will we need other ones?
 const createConverter = (ratio) => {
   return {
@@ -19,7 +42,7 @@ const createSimpleConverter = (ratio) => {
   }
 }
 
-// what will this do, just check?
+// TODO: rework this
 const positionChecker = (minmax) => { // [ [min1, max1], [m2,m2], ...]
   return {
     // will there be any other function?
@@ -32,6 +55,12 @@ const positionChecker = (minmax) => { // [ [min1, max1], [m2,m2], ...]
   }
 }
 
+
+// TODO: put this into  converter?
+export const toRads = (gwAngle) => gwAngle*Math.PI/512
+export const toDegrees = (gwAngle) => gwAngle*180/512
+export const radsToGwAngle = (rads) => Math.round(rads*512/Math.PI)
+
 export const angleRatio = Math.PI/512
 export const distRatio = 100/97
 export const scaleRatio = 1/100
@@ -39,7 +68,12 @@ export const scaleRatio = 1/100
 export const angleConverter = createConverter(angleRatio)
 export const distConverter = createConverter(distRatio)
 export const scaleConverter = createSimpleConverter(scaleRatio)
+
+// TODO also in a converter
+// correct value to fall between 0 and ~359 degrees
 export const correctAngle = (value) => (value + 2*Math.PI) % (2*Math.PI)
+// angle values in a prop (6 decimals) are imprecise, this adds the missing decimals for better precision
+export const trueAngle = (angle) => (Math.round(512*angle/Math.PI)/512)*Math.PI
 
 const sinCos = (angle) => {
   return [Math.sin(angle), Math.cos(angle)]

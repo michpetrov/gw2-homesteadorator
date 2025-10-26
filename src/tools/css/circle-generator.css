@@ -1,0 +1,35 @@
+.tool-control.circle-generator {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 2fr;
+  grid-column-gap: 6px;
+  grid-row-gap: 10px;
+  justify-items: stretch;
+  align-items: end;
+
+  input {
+    margin-left: 10px;
+
+    &#cg-count {
+      width: 40px;
+    }
+
+    &#cg-radius {
+      width: 100px;
+    }
+
+    &[type=checkbox] {
+      vertical-align: text-bottom;
+    }
+  }
+
+  label:last-of-type {
+    input {
+      margin: 0 8px;
+    }
+  }
+
+  #cg-generate-button {
+    grid-column-start: 2;
+    grid-column-end: 4;
+  }
+}

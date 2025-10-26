@@ -1,0 +1,25 @@
+.tool-control.full-control {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-column-gap: 6px;
+  grid-row-gap: 10px;
+  align-items: start;
+  justify-items: start;
+
+  .checkbox-list {
+    list-style: none;
+    list-style-position: inside;
+    grid-row-start: 1;
+    grid-row-end: 5;
+    text-align: left;
+    overflow: auto;
+
+    .card-child:last-of-type {
+      grid-column-start: 3;
+    }
+  }
+
+  input[type=range] {
+    width: 250px;
+  }
+}

@@ -1,0 +1,39 @@
+.tool-control.randomizer {
+  display: grid;
+  grid-template-columns: 2fr 3fr 3fr 2fr 3fr 3fr 2fr 3fr 3fr; /* for real for real */
+  grid-column-gap: 6px;
+  grid-row-gap: 10px;
+  align-items: end;
+
+  label {
+    padding: 0.6em 0em;
+  }
+
+  input {
+    margin-left: 10px;
+
+    &[readonly] {
+      color: #303030;
+      background-color: #707070;
+    }
+
+    &[type=checkbox] {
+     vertical-align: baseline;
+    }
+
+    &[type=number] {
+     width: 60px;
+
+      br + &[type=number] {
+        width: 114px;
+        margin-left: unset;
+      }
+    }
+
+  }
+
+  #rnd-generate-button {
+    grid-column-start: 8;
+    grid-column-end: 10;
+  }
+}

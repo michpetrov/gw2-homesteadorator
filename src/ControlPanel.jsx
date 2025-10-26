@@ -2,9 +2,13 @@ import { useState } from 'react'
 import ToolControlContext from './ToolControlContext.jsx'
 import FullControl from './tools/FullControl.jsx'
 import Mover from './tools/Mover.jsx'
+import CircleGenerator from './tools/CircleGenerator.jsx'
+import Randomizer from './tools/Randomizer.jsx'
 
 const tools = {
   'mover': <Mover/>,
+  'circle-generator': <CircleGenerator/>,
+  'randomizer': <Randomizer/>,
   'full-control': <FullControl/>
 }
 

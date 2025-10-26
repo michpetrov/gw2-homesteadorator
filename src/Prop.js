@@ -1,9 +1,9 @@
-const printNumber = (n) => n.toFixed(6);
+import { trueAngle } from './HomesteadMath'
+
+const printNumber = (n) => n.toFixed(6).replace('-0','0') // hack to avoid "-0.000000"
 const printNumberArray = (arr) => arr.map(printNumber).join(" ")
 
 const propRegex = /<prop (id)="(.+)" (name)="(.+)" (pos)="(.+)" (rot)="(.+)" (scl)="(.+)" \/>/i
-
-const trueAngle = (angle) => (Math.round(512*angle/Math.PI)/512)*Math.PI
 
 export const emptyProp = () => fromString(`<prop id="" name="" pos="0.000000 0.000000 0.000000" rot="0.000000 0.000000 0.000000" scl="1.000000" />`)
 

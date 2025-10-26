@@ -4,7 +4,7 @@ import * as Prop from '../Prop'
 import * as HMath from '../HomesteadMath'
 
 export default () => {
-  const {decs, setDecs} = useContext(ToolControlContext);
+  const {decs, setDecs} = useContext(ToolControlContext)
   const [pivotXML, setPivotXML] = useState("")
 
   const correctAngle = (value, mod) => (value + mod) % mod
