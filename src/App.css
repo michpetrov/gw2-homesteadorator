@@ -1,8 +1,43 @@
+/*--------------- global */
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+}
+
+div.notice {
+  color: orange;
+  background-color: darkred;
+  border: 4px solid orange;
+  border-radius: 1rem;
+  width: 60%;
+  margin: 0 auto;
+  padding: 6px;
+
+  span, p {
+    display: inline-block;
+  }
+
+  span.logo {
+    vertical-align: text-bottom;
+    font-weight: 700;
+    font-size: 4.5rem;
+    width: 12%;
+    /*margin-right: 10px;*/
+  }
+
+  p {
+    vertical-align: top;
+    width: 85%;
+    font-size: larger;
+  }
+}
+
+.content {
+  min-height: 90vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
 
 .controls {
@@ -46,6 +81,7 @@
 
       &:hover {
         background-color: #363636;
+        transition: background-color 0.5s;
       }
     }
   }
@@ -62,3 +98,114 @@
 .z-axis {
   accent-color: blue;
 }
+
+footer {
+    margin: 0 auto;
+
+  nav {
+    display: flex;
+    width: 60vw;
+    justify-content: space-between;
+    flex-direction: row;
+
+    a {
+      color: #eaeaea;
+      font-size: 1.6rem;
+      font-weight: 200;
+      padding: 0 20px;
+
+      &:hover {
+        color: #eaeaea;
+        background-color: #363636;
+        transition: background-color 0.5s;
+      }
+
+      &.active {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+/*--------------- other pages */
+
+div.about {
+  text-align: left;
+  /*width: 90%;*/
+
+  p, code {
+    font-size: larger;
+  }
+
+  code {
+    color: #363636;
+    background-color: #eaeaea;
+
+    &.block {
+      display: block;
+      margin: 10px 0;
+      font-weight: bold;
+      padding-left: 10px;
+    }
+  }
+
+  p {
+    max-width: 50vw;
+  }
+}
+
+div.changelog-plans {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 20px;
+  font-size: larger;
+  align-items: start;
+  
+  div.changelog, div.plans {
+    text-align: left;
+  }
+
+  div.changelog {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    align-items: baseline;
+    justify-items: start;
+  }
+
+  div.plans {
+    ul {
+      list-style: circle;
+      list-style-position: outside;
+    }
+  }
+}
+
+div.contacts {
+  text-align: left;
+  max-width: 40vw;
+  font-size: large;
+
+  ul.contact-list {
+    list-style: none;
+    list-style-position: inside;
+    width: 20vw;
+    display: flex;
+    flex-direction: column;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    code {
+      font-size: 1rem;
+      background-color: #060606;
+      text-align: right;
+    }
+
+    span:nth-child(2n) {
+      display: none;
+    }
+  }
+}
+
