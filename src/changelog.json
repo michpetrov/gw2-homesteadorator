@@ -6,8 +6,8 @@
     },
     "plans":
     [
-        "add \"before\"\\\"after\" pictures to each tool to showase what it does",
-        "more types of constraints on randomizer (sphere, funnel = tornado, etc.)",
+        "add \"before\"/\"after\" pictures to each tool to showcase what it does",
+        "more types of constraints on randomizer (sphere, funnel aka tornado, etc.)",
         "maze generator",
         "skywriting"
     ]

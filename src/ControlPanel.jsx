@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import ToolControlContext from './ToolControlContext.jsx'
+import Hint from './Hint.jsx'
 import FullControl from './tools/FullControl.jsx'
 import Mover from './tools/Mover.jsx'
 import CircleGenerator from './tools/CircleGenerator.jsx'
@@ -33,6 +34,7 @@ export default (state) => {
           {options}
         </menu>
       </div>
+      <Hint toolName={tool}/>
       <div className={`tool-control ${tool}`}>
         <ToolControlContext value={{...state}}>
           {state.decs.length != 0 && tools[tool]}
