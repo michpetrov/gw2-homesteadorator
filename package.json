@@ -1,7 +1,7 @@
 {
   "name": "gw2-homesteadorator",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.9",
   "type": "module",
   "scripts": {
     "dev": "vite",

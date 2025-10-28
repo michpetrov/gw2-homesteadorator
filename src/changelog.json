@@ -1,11 +1,11 @@
 {
     "changes":
     {
-        "0.9": "beta release",
-        "0.45": "nonexistent release"
+        "0.9": "beta release"
     },
     "plans":
     [
+        "add copy button to the main textarea, fill in the tool hints",
         "add \"before\"/\"after\" pictures to each tool to showcase what it does",
         "more types of constraints on randomizer (sphere, funnel aka tornado, etc.)",
         "maze generator",
