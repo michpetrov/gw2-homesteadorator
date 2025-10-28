@@ -14,6 +14,7 @@ div.notice {
   width: 60%;
   margin: 0 auto;
   padding: 6px;
+  opacity: 0.6;
 
   span, p {
     display: inline-block;
