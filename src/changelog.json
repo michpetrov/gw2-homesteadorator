@@ -1,6 +1,7 @@
 {
     "changes":
     {
+        "0.9.1": "fixed prop púarsing and circle generator",
         "0.9": "beta release"
     },
     "plans":
