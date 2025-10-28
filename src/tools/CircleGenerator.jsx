@@ -37,7 +37,7 @@ export default () => {
       let r = Number.parseFloat(radius)
       let x = r*Math.cos(currAngle)
       let y = r*Math.sin(currAngle)
-      e.pos = HMath.addTuple(cent, [x, y, e.pos[2]])
+      e.pos = HMath.addTuple(cent, [x, y, 0])
 
       if (radiate) {
         e.rot = [0, 0, currAngle - Math.PI/2]
@@ -61,7 +61,7 @@ export default () => {
         <input type="number" id="cg-radius" name="cg-radius" step={posStep} value={radius} onChange={e => setCircleProps({...circleProps, radius: e.target.value})} />
       </label>
       <label>Radiate
-        <input type="checkbox" id="cg-radiate" name="cg-radiate" value={radiate} onChange={e => setCircleProps({...circleProps, radiate: e.target.value})} />
+        <input type="checkbox" id="cg-radiate" name="cg-radiate" value={radiate} onChange={e => setCircleProps({...circleProps, radiate: !radiate})} />
       </label>
       <label>Center (X,Y,Z)<br />
         <input type="number" id="cg-x" name="cg-x" step={posStep} min={hs.x[0]} max={hs.x[1]} value={center[0]} onChange={e => setCenter(0, e.target.value)} />

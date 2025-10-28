@@ -3,9 +3,9 @@ import { trueAngle } from './HomesteadMath'
 const printNumber = (n) => n.toFixed(6).replace('-0','0') // hack to avoid "-0.000000"
 const printNumberArray = (arr) => arr.map(printNumber).join(" ")
 
-const propRegex = /<prop (id)="(.+)" (name)="(.+)" (pos)="(.+)" (rot)="(.+)" (scl)="(.+)" \/>/i
+const propRegex = /<prop (id)="(.+)" (name)="(.+)" (pos)="(.+)" (rot)="(.+)" (scl)="(.+)"\/>/i
 
-export const emptyProp = () => fromString(`<prop id="" name="" pos="0.000000 0.000000 0.000000" rot="0.000000 0.000000 0.000000" scl="1.000000" />`)
+export const emptyProp = () => fromString(`<prop id="" name="" pos="0.000000 0.000000 0.000000" rot="0.000000 0.000000 0.000000" scl="1.000000"/>`)
 
 export const fromString = (prop) => {
   let obj = {}
@@ -21,4 +21,4 @@ export const fromString = (prop) => {
 }
 
 export const toString = ({id, name, pos, rot, scl}) => 
-    `<prop id="${id}" name="${name}" pos="${printNumberArray(pos)}" rot="${printNumberArray(rot)}" scl="${printNumber(scl)}" />`
+    `<prop id="${id}" name="${name}" pos="${printNumberArray(pos)}" rot="${printNumberArray(rot)}" scl="${printNumber(scl)}"/>`
